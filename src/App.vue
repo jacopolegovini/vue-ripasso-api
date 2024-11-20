@@ -4,15 +4,17 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      api: 'http://127.0.0.1:8000/api/posts'
+      api: 'http://127.0.0.1:8000/api/posts',
+      postLists: [],
     }
   },
   methods: {
     getApi(api) {
       axios.get(api)
-        .then(function (response) {
+        .then((response) => {
           // handle success
           console.log(response.data.data);
+          this.postLists = response.data.data
         })
         .catch(function (error) {
           // handle error
@@ -34,7 +36,13 @@ export default {
   </header>
 
   <main>
-    <section>Vari dati</section>
+    <section>
+      <ul>
+        <li v-for="post in postLists" :key="post.id">
+          {{ post.title }}
+        </li>
+      </ul>
+    </section>
   </main>
 </template>
 
